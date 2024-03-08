@@ -27,13 +27,14 @@ const getAllCourseList=async()=>{
           totalChapters
           sourceCode
           tag
+          slug
         }
       }      
        `
-
+ 
     const result=await request(MASTER_URL,query);
     return result;
-}
+} 
 
 const GetSideBanner=async()=>{
   const query=gql`
@@ -53,7 +54,43 @@ const GetSideBanner=async()=>{
   return result;
 }
 
+const getCourseById=async(courseId)=>{
+  const query=gql`
+  query MyQuery {
+    courseList(where: {slug: "`+courseId+`"}) {
+      author
+      banner {
+        url
+      }
+      chapter {
+        ... on Chapter {
+          id
+          name
+          video {
+            url
+          }
+        }
+      }
+      demoUrl
+      description
+      free
+      id
+      name
+      slug
+      sourceCode
+      tag
+      totalChapters
+    }
+  } 
+  `
+  const result=await request(MASTER_URL,query);
+  return result;
+}
+
+
+
 export default{
     getAllCourseList,
-    GetSideBanner
+    GetSideBanner,
+    getCourseById
 }

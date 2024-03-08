@@ -10,10 +10,11 @@ function SideBanners() {
     },[])
     const GetSideBanner=()=>{
         GlobalApi.GetSideBanner().then(resp=>{
-            console.log(resp);
-            setSideBannerList(resp.SideBanners)
+            // console.log(resp);
+            setSideBannerList(resp.sideBanners)
         })
     }
+    console.log(sideBannerList)
   return (
     <div>
         {sideBannerList?.map((item,index)=>(
@@ -21,6 +22,8 @@ function SideBanners() {
               <Image src={item.banner.url} alt='banner'
               width={500}
               height={300}
+              onClick={()=>window.open(item?.url)}
+              className='rounded-xl cursor-pointer'
               />
                 </div>
         ))}
